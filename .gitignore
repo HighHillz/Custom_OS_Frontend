@@ -1,0 +1,8 @@
+# Ignore sensitive data, logs and caches
+*.log
+*.tmp
+/cache/
+/dconf/
+/gnupg/
+/ssh/
+.DS_Store
