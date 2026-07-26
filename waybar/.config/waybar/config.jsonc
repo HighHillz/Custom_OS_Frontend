@@ -1,0 +1,77 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 48,
+    "spacing": 4,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "custom/center"
+    ],
+    "modules-right": [
+        "network",
+        "cpu",
+        "memory",
+        "disk",
+        "battery",
+        "tray",
+        "custom/power"
+    ],
+    "network": {
+        "interval": 2,
+        "format-wifi": "  ↓{bandwidthDownBytes} ↑{bandwidthUpBytes}",
+        "format-ethernet": "↓{bandwidthDownBytes} ↑{bandwidthUpBytes}",
+        "format-disconnected": "d  Disconnected",
+        "tooltip-format-wifi": "{essid}\nStrength: {signalStrength}%",
+        "tooltip-format-ethernet": "  {ifname} — {ipaddr}",
+        "tooltip-format-disconnected": "No network",
+        "on-click": "kitty -e nmtui"
+    },
+    "custom/center": {
+        "exec": "~/dotfiles/scripts/waybar_center.sh",
+        "return-type": "json",
+        "interval": 1,
+        "signal": 8,
+        "min-length": 28
+    },
+    "cpu": {
+        "states": {"warning": 70, "critical": 85},
+        "format": " {usage}%",
+        "tooltip": true
+    },
+    "memory": {
+        "states": {"warning": 70, "critical": 85},
+        "format": " {}%",
+        "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB"
+    },
+    "disk": {
+        "states": {"warning": 70, "critical": 85},
+        "format": " {percentage_used}%",
+        "tooltip-format": "SSD: {used} / {total}  ({free} free)",
+        "path": "/"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󱐋 {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "tooltip-format": "{timeTo} — {power:.1f}W"
+    },
+    "custom/power": {
+        "format": "",
+        "on-click": "~/dotfiles/scripts/power_menu.sh",
+        "tooltip": false
+    }
+}

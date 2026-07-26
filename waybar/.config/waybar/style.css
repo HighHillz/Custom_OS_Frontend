@@ -1,0 +1,148 @@
+* {
+    border: none;
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+}
+
+label {
+    font-weight: 600;
+}
+
+window#waybar {
+    background-color: transparent;
+    color: #717c91;
+}
+
+/* --- LEFT CONTAINER (Workspace Dynamic Island) --- */
+.modules-left {
+    background-color: rgba(18, 18, 24, 0.82);
+    border-radius: 20px;
+    padding: 3px 10px 3px 3px;
+    margin: 5px 0 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --- CENTER CONTAINER (Clock Dynamic Island) --- */
+.modules-center {
+    background-color: rgba(18, 18, 24, 0.82);
+    border-radius: 20px;
+    padding: 3px 18px;
+    margin: 5px 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --- RIGHT CONTAINER (Status Dynamic Island) --- */
+.modules-right {
+    background-color: rgba(18, 18, 24, 0.82);
+    border-radius: 20px;
+    padding: 3px 14px;
+    margin: 5px 10px 5px 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --- MODULE STYLING --- */
+#custom-center {
+    background: transparent;
+    color: #ffffff;
+    min-width: 260px;
+}
+
+/* Volume and Brightness HUD — overrides center clock temporarily */
+#custom-center.volume-hud,
+#custom-center.brightness-hud {
+    color: #ffffff;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+/* Charging HUD — overrides center clock temporarily */
+#custom-center.charging-hud {
+    color: #43d98a;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+#custom-center.volume-hud.muted {
+    color: #f94144;
+}
+
+#network,
+#cpu,
+#memory,
+#pulseaudio,
+#disk,
+#battery,
+#tray,
+#custom-power {
+    background: transparent;
+    padding: 0 8px;
+    color: #e0e6ed;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    margin: 0 2px;
+    background-color: transparent;
+    color: #f2f4f8;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button.active {
+    border: 1px solid #0099ff;
+    color: #0099ff;
+}
+
+#workspaces button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- BATTERY STATE COLOURS --- */
+#battery.warning {
+    color: #f9c74f;
+    /* yellow — under 30% */
+}
+
+#battery.critical {
+    color: #f94144;
+    /* red — under 20% */
+    animation: battery-pulse 1.5s ease-in-out infinite;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: #43d98a;
+    /* green — charging / plugged in */
+}
+
+@keyframes battery-pulse {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.45;
+    }
+}
+
+/* --- CPU / RAM / DISK STATE COLOURS --- */
+#cpu.warning,
+#memory.warning,
+#disk.warning {
+    color: #f9c74f;
+    /* yellow — above 70% */
+}
+
+#cpu.critical,
+#memory.critical,
+#disk.critical {
+    color: #f94144;
+    /* red — above 85% */
+}
+
+#custom-power {
+    color: #f94144;
+    padding-left: 12px;
+}
