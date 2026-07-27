@@ -5,8 +5,40 @@
     "spacing": 4,
     "modules-left": [
         "hyprland/workspaces",
-        "hyprland/window"
+        "custom/status",
+        "bluetooth"
     ],
+    "hyprland/workspaces": {
+        "persistent-workspaces": {
+            "*": [
+                1,
+                2,
+                3,
+                4
+            ]
+        }
+    },
+    "custom/status": {
+        "exec": "/home/high-hillz/dotfiles/scripts/waybar_status.sh",
+        "return-type": "json",
+        "interval": 1,
+        "signal": 9,
+        "tooltip": true
+    },
+    "bluetooth": {
+        "format": "󰂯",
+        "format-disabled": "󰂲",
+        "format-off": "󰂲",
+        "format-on": "󰂯",
+        "format-connected": "󰂱",
+        "tooltip-format": "Bluetooth: {status}",
+        "tooltip-format-disabled": "Bluetooth: Disabled",
+        "tooltip-format-off": "Bluetooth: Off",
+        "tooltip-format-on": "Bluetooth: On (No device connected)",
+        "tooltip-format-connected": "Bluetooth: Connected to {device_alias}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "/home/high-hillz/dotfiles/scripts/bluetooth_menu.sh"
+    },
     "modules-center": [
         "custom/center"
     ],
@@ -33,21 +65,29 @@
         "exec": "~/dotfiles/scripts/waybar_center.sh",
         "return-type": "json",
         "interval": 1,
-        "signal": 8,
-        "min-length": 28
+        "signal": 8
     },
     "cpu": {
-        "states": {"warning": 70, "critical": 85},
+        "states": {
+            "warning": 70,
+            "critical": 85
+        },
         "format": " {usage}%",
         "tooltip": true
     },
     "memory": {
-        "states": {"warning": 70, "critical": 85},
+        "states": {
+            "warning": 70,
+            "critical": 85
+        },
         "format": " {}%",
         "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB"
     },
     "disk": {
-        "states": {"warning": 70, "critical": 85},
+        "states": {
+            "warning": 70,
+            "critical": 85
+        },
         "format": " {percentage_used}%",
         "tooltip-format": "SSD: {used} / {total}  ({free} free)",
         "path": "/"
@@ -55,7 +95,8 @@
     "battery": {
         "states": {
             "warning": 30,
-            "critical": 20
+            "danger": 20,
+            "critical": 10
         },
         "format": "{icon} {capacity}%",
         "format-charging": "󱐋 {capacity}%",

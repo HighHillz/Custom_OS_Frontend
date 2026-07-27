@@ -96,5 +96,5 @@ check_hud "$BRIGHT_HUD_FLAG" "brightness"
 check_hud "$CHARGING_HUD_FLAG" "charging"
 
 # Default: show clock
-printf '{"text":"  %s","class":"clock"}' "$(date '+%H:%M            %d %b %Y')"
+printf '{"text":"  %s","class":"clock"}' "$(date '+%H:%M    %d %b %Y')"
 

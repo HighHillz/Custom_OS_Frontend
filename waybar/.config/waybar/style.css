@@ -19,10 +19,35 @@ window#waybar {
 .modules-left {
     background-color: rgba(18, 18, 24, 0.82);
     border-radius: 20px;
-    padding: 3px 10px 3px 3px;
+    padding: 3px 3px 3px 3px;
     margin: 5px 0 5px 10px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+#custom-status {
+    background: transparent;
+    padding: 0 12px 0 12px;
+    margin-left: 4px;
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 16px;
+}
+
+#bluetooth {
+    background: transparent;
+    padding: 0 12px 0 12px;
+    font-size: 16px;
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+    color: rgba(59, 130, 246, 0.35);
+}
+
+#bluetooth.on,
+#bluetooth.connected {
+    color: #3b82f6;
+}
+
 
 /* --- CENTER CONTAINER (Clock Dynamic Island) --- */
 .modules-center {
@@ -46,7 +71,7 @@ window#waybar {
 #custom-center {
     background: transparent;
     color: #ffffff;
-    min-width: 260px;
+    transition: all 0.3s ease;
 }
 
 /* Volume and Brightness HUD — overrides center clock temporarily */
@@ -55,6 +80,7 @@ window#waybar {
     color: #ffffff;
     font-size: 13px;
     letter-spacing: 2px;
+    min-width: 260px;
 }
 
 /* Charging HUD — overrides center clock temporarily */
@@ -62,6 +88,7 @@ window#waybar {
     color: #43d98a;
     font-size: 13px;
     letter-spacing: 0.5px;
+    min-width: 260px;
 }
 
 #custom-center.volume-hud.muted {
@@ -90,6 +117,10 @@ window#waybar {
     transition: all 0.2s ease;
 }
 
+#workspaces button.empty {
+    color: #404a5c;
+}
+
 #workspaces button.active {
     border: 1px solid #0099ff;
     color: #0099ff;
@@ -105,10 +136,15 @@ window#waybar {
     /* yellow — under 30% */
 }
 
-#battery.critical {
+#battery.danger {
     color: #f94144;
     /* red — under 20% */
-    animation: battery-pulse 1.5s ease-in-out infinite;
+}
+
+#battery.critical:not(.charging):not(.plugged) {
+    color: #f94144;
+    /* red — under 10% */
+    animation: battery-pulse 3s ease-in-out infinite;
 }
 
 #battery.charging,
@@ -118,12 +154,16 @@ window#waybar {
 }
 
 @keyframes battery-pulse {
-    from {
+    0% {
         opacity: 1;
     }
 
-    to {
-        opacity: 0.45;
+    50% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 1;
     }
 }
 
