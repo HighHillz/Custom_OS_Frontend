@@ -5,8 +5,8 @@
     "spacing": 4,
     "modules-left": [
         "hyprland/workspaces",
-        "custom/status",
-        "bluetooth"
+        "bluetooth",
+        "custom/status"
     ],
     "hyprland/workspaces": {
         "persistent-workspaces": {
@@ -48,7 +48,6 @@
         "memory",
         "disk",
         "battery",
-        "tray",
         "custom/power"
     ],
     "network": {

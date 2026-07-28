@@ -68,10 +68,10 @@ touchpad_status = "Enabled"   if touchpad_active else "Disabled"
 hp_status       = "Connected" if hp_active      else "Disconnected"
 
 tooltip = (
+    f"Headphones: {hp_status}\n"
     f"Caps Lock:  {caps_status}\n"
     f"Num Lock:   {num_status}\n"
-    f"Touchpad:   {touchpad_status}\n"
-    f"Headphones: {hp_status}"
+    f"Touchpad:   {touchpad_status}"
 )
 
 print(json.dumps({"text": text, "tooltip": tooltip, "class": "status-module"}, ensure_ascii=False))
