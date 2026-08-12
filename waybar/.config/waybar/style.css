@@ -63,7 +63,10 @@ window#waybar {
     padding: 3px 18px;
     margin: 5px 0;
     border: 1px solid rgba(0, 229, 195, 0.15);
-    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    /* overflow:hidden is not supported in GTK CSS */
+    transition: min-width 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+        background 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 /* --- RIGHT CONTAINER (Status Dynamic Island) --- */
@@ -79,27 +82,42 @@ window#waybar {
 #custom-center {
     background: transparent;
     color: rgba(168, 230, 240, 0.90);
-    min-width: 0;
-    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 205px;
+    border-radius: 14px;
+    transition: color 0.2s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
-/* Volume and Brightness HUD — overrides center clock temporarily */
+/* Clock baseline */
+#custom-center.clock {
+}
+
+/* One-shot clock entry (emitted by script for exactly 1 poll cycle after a HUD ends) */
+#custom-center.clock-enter {
+    animation: hud-enter 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ─── HUD base states ─────────────────────────────────────────────── */
 #custom-center.volume-hud,
 #custom-center.brightness-hud {
     color: #a8e6f0;
-    font-size: 13px;
-    letter-spacing: 2px;
-    min-width: 260px;
+    animation: hud-enter 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-/* Charging HUD — overrides center clock temporarily */
 #custom-center.charging-hud {
     color: #3dffa0;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    min-width: 260px;
+    animation: hud-enter 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
+/* Exit animation — overrides hud-enter when .exiting class is added */
+#custom-center.volume-hud.exiting,
+#custom-center.brightness-hud.exiting,
+#custom-center.charging-hud.exiting {
+    animation: hud-exit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Muted */
 #custom-center.volume-hud.muted {
     color: #ff6b6b;
 }
@@ -160,6 +178,32 @@ window#waybar {
 #battery.plugged {
     color: #3dffa0;
     /* emerald — charging / plugged in */
+}
+
+@keyframes hud-enter {
+    /* slide UP into view + fade in */
+    0% {
+        opacity: 0;
+        margin-top: 12px;
+    }
+
+    100% {
+        opacity: 1;
+        margin-top: 0px;
+    }
+}
+
+@keyframes hud-exit {
+    /* slide DOWN and fade out */
+    0% {
+        opacity: 1;
+        margin-top: 0px;
+    }
+
+    100% {
+        opacity: 0;
+        margin-top: 12px;
+    }
 }
 
 @keyframes battery-pulse {
