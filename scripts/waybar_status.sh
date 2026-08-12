@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import glob, json, subprocess, os
 
-ACTIVE_COLOR = "#3b82f6"
-DIMMED_COLOR = "#3b82f64d"
+ACTIVE_COLOR = "#00e5c3"
+DIMMED_COLOR = "#00e5c34d"
 
 _kbd_caps = False
 _kbd_num  = False
@@ -54,8 +54,8 @@ touchpad_color = ACTIVE_COLOR if touchpad_active else DIMMED_COLOR
 hp_color       = ACTIVE_COLOR if hp_active       else DIMMED_COLOR
 
 # Uniform icons with exact matching spacing
-caps_icon     = f"<span foreground='{caps_color}'>⇪</span>"
-num_icon      = f"<span foreground='{num_color}'>⇭</span>"
+caps_icon     = f"<span foreground='{caps_color}'>A</span>"
+num_icon      = f"<span foreground='{num_color}'>1</span>"
 touchpad_icon = f"<span foreground='{touchpad_color}'>󰟸</span>"
 hp_icon       = f"<span foreground='{hp_color}'>󰋋</span>"
 

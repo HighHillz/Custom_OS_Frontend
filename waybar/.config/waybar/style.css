@@ -1,6 +1,12 @@
+/* ═══════════════════════════════════════════════════════════
+   WAYBAR — Garden City Theme
+   Palette: jade #00e5c3 · emerald #3dffa0 · sky #a8e6f0
+   Background: deep forest rgba(10,28,20,0.9)
+   ═══════════════════════════════════════════════════════════ */
+
 * {
     border: none;
-    font-family: "JetBrainsMono Nerd Font", sans-serif;
+    font-family: "Maple Mono NF", "JetBrainsMono Nerd Font", monospace;
     font-size: 13px;
     margin: 0;
     padding: 0;
@@ -12,72 +18,75 @@ label {
 
 window#waybar {
     background-color: transparent;
-    color: #717c91;
+    color: rgba(168, 230, 240, 0.75);
 }
 
 /* --- LEFT CONTAINER (Workspace Dynamic Island) --- */
 .modules-left {
-    background-color: rgba(18, 18, 24, 0.82);
+    background-color: rgba(10, 28, 20, 0.9);
     border-radius: 20px;
     padding: 3px 3px 3px 3px;
     margin: 5px 0 5px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 229, 195, 0.15);
 }
 
 #custom-status {
     background: transparent;
     padding: 0 12px 0 8px;
     font-size: 13px;
+    color: rgba(168, 230, 240, 0.70);
 }
 
 #bluetooth {
     background: transparent;
     padding: 0 12px 0 12px;
     margin-left: 4px;
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 1px solid rgba(0, 229, 195, 0.18);
     font-size: 13px;
 }
 
 #bluetooth.disabled,
 #bluetooth.off {
-    color: rgba(59, 130, 246, 0.35);
+    color: rgba(0, 229, 195, 0.30);
 }
 
 #bluetooth.on,
 #bluetooth.connected {
-    color: #3b82f6;
+    color: #00e5c3;
 }
 
 
 /* --- CENTER CONTAINER (Clock Dynamic Island) --- */
 .modules-center {
-    background-color: rgba(18, 18, 24, 0.82);
+    background-color: rgba(10, 28, 20, 1);
     border-radius: 20px;
     padding: 3px 18px;
     margin: 5px 0;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 229, 195, 0.15);
+    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* --- RIGHT CONTAINER (Status Dynamic Island) --- */
 .modules-right {
-    background-color: rgba(18, 18, 24, 0.82);
+    background-color: rgba(10, 28, 20, 0.9);
     border-radius: 20px;
     padding: 3px 14px;
     margin: 5px 10px 5px 0;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 229, 195, 0.15);
 }
 
 /* --- MODULE STYLING --- */
 #custom-center {
     background: transparent;
-    color: #ffffff;
-    transition: all 0.3s ease;
+    color: rgba(168, 230, 240, 0.90);
+    min-width: 0;
+    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Volume and Brightness HUD — overrides center clock temporarily */
 #custom-center.volume-hud,
 #custom-center.brightness-hud {
-    color: #ffffff;
+    color: #a8e6f0;
     font-size: 13px;
     letter-spacing: 2px;
     min-width: 260px;
@@ -85,14 +94,14 @@ window#waybar {
 
 /* Charging HUD — overrides center clock temporarily */
 #custom-center.charging-hud {
-    color: #43d98a;
+    color: #3dffa0;
     font-size: 13px;
     letter-spacing: 0.5px;
     min-width: 260px;
 }
 
 #custom-center.volume-hud.muted {
-    color: #f94144;
+    color: #ff6b6b;
 }
 
 #network,
@@ -105,52 +114,52 @@ window#waybar {
 #custom-power {
     background: transparent;
     padding: 0 8px;
-    color: #e0e6ed;
+    color: rgba(168, 230, 240, 0.85);
 }
 
 #workspaces button {
     padding: 0 8px;
     margin: 0 2px;
     background-color: transparent;
-    color: #f2f4f8;
+    color: rgba(168, 230, 240, 0.65);
     border-radius: 20px;
     transition: all 0.2s ease;
 }
 
 #workspaces button.empty {
-    color: #404a5c;
+    color: rgba(168, 230, 240, 0.20);
 }
 
 #workspaces button.active {
-    border: 1px solid #0099ff;
-    color: #0099ff;
+    border: 1px solid #00e5c3;
+    color: #00e5c3;
 }
 
 #workspaces button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 229, 195, 0.10);
 }
 
 /* --- BATTERY STATE COLOURS --- */
 #battery.warning {
-    color: #f9c74f;
-    /* yellow — under 30% */
+    color: #ffd166;
+    /* amber — under 30% */
 }
 
 #battery.danger {
-    color: #f94144;
+    color: #ff6b6b;
     /* red — under 20% */
 }
 
 #battery.critical:not(.charging):not(.plugged) {
-    color: #f94144;
+    color: #ff6b6b;
     /* red — under 10% */
     animation: battery-pulse 3s ease-in-out infinite;
 }
 
 #battery.charging,
 #battery.plugged {
-    color: #43d98a;
-    /* green — charging / plugged in */
+    color: #3dffa0;
+    /* emerald — charging / plugged in */
 }
 
 @keyframes battery-pulse {
@@ -171,18 +180,18 @@ window#waybar {
 #cpu.warning,
 #memory.warning,
 #disk.warning {
-    color: #f9c74f;
-    /* yellow — above 70% */
+    color: #ffd166;
+    /* amber — above 70% */
 }
 
 #cpu.critical,
 #memory.critical,
 #disk.critical {
-    color: #f94144;
+    color: #ff6b6b;
     /* red — above 85% */
 }
 
 #custom-power {
-    color: #f94144;
+    color: #ff6b6b;
     padding-left: 12px;
 }

@@ -72,9 +72,11 @@ check_hud() {
     local flag_file=$1
     local type=$2
     if [[ -f "$flag_file" ]]; then
-        local hud_time=$(cat "$flag_file" 2>/dev/null)
-        local now=$(date +%s)
-        local elapsed=$(( now - hud_time ))
+        local hud_time
+        hud_time=$(cat "$flag_file" 2>/dev/null)
+        local now
+        now=$(date +%s)
+        local elapsed=$(( now - ${hud_time:-0} ))
 
         if [[ $elapsed -lt $HUD_DURATION ]]; then
             if [[ "$type" == "volume" ]]; then
@@ -85,9 +87,10 @@ check_hud() {
                 get_charging_json
             fi
             exit 0
-        else
-            rm -f "$flag_file"
         fi
+        # Stale — try to remove, but silently ignore if we lack permission
+        # (e.g. file was written by a udev/root process)
+        rm -f "$flag_file" 2>/dev/null || true
     fi
 }
 
