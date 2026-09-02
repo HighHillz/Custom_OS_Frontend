@@ -5,7 +5,6 @@ monitor=,preferred,auto,1
 exec-once = swww-daemon
 exec-once = swww img ~/dotfiles/wallpapers/theme_6-blue_wall.png
 exec-once = waybar
-# AI assistant now launched on-demand via SUPER+A
 
 # --- KEYBINDINGS ---
 $mainMod = SUPER
@@ -14,31 +13,11 @@ bind = $mainMod, Q, exec, kitty
 bind = $mainMod, C, killactive
 bind = $mainMod, M, exit,
 bind = $mainMod, E, exec, nautilus
-bind = $mainMod, R, exec, ~/dotfiles/scripts/guard-wofi.sh
+bind = $mainMod, R, exec, wofi --show drun
 bind = $mainMod, F, fullscreen, 0
 bind = $mainMod, D, exec, ~/dotfiles/scripts/toggle_desktop.sh
 bind = $mainMod, L, exec, hyprlock
-bind = SUPER SHIFT, R, exec, wf-recorder --audio -g "$(slurp)" -f ~/Videos/recording-$(date +%Y-%m-%d_%H-%M-%S).mp4
 bind = $mainMod, PERIOD, exec, wofi-emoji
-
-# --- AI ASSISTANT (dedicated workspace 5: "AI") ---
-# SUPER+A → switch to workspace 5 (fullscreen assistant). SUPER+A again → back to previous workspace.
-bind = $mainMod, A, exec, ~/GeneralAI/scripts/toggle-assistant.sh
-
-# GeneralAI window rules — pin to workspace 5, Hyprland 0.53+ syntax
-windowrule {
-    name = generalai
-    match:class = ^(generalai-assistant)$
-    workspace = 5
-}
-
-# Lock workspace 5 to AI only: any non-AI window that lands on ws 5 gets moved to ws 1
-windowrule {
-    name = nonai-ws5-guard
-    match:workspace = 5
-    match:class = ^(?!generalai-assistant).*$
-    workspace = 1
-}
 
 # --- TOUCHPAD TOGGLE (F11 or Fn + F11) ---
 bind = , XF86TouchpadToggle, exec, ~/dotfiles/scripts/toggle_touchpad.sh && pkill -SIGRTMIN+9 waybar
@@ -87,26 +66,24 @@ bind = $mainMod, right, movefocus, r
 bind = $mainMod, up, movefocus, u
 bind = $mainMod, down, movefocus, d
 
-# Workspaces 1–4 (apps) + 5 (AI Assistant)
+# Workspaces
 bind = $mainMod, 1, workspace, 1
 bind = $mainMod, 2, workspace, 2
 bind = $mainMod, 3, workspace, 3
 bind = $mainMod, 4, workspace, 4
-bind = $mainMod, 5, exec, ~/GeneralAI/scripts/toggle-assistant.sh
 
 bind = SUPER SHIFT, 1, movetoworkspace, 1
 bind = SUPER SHIFT, 2, movetoworkspace, 2
 bind = SUPER SHIFT, 3, movetoworkspace, 3
 bind = SUPER SHIFT, 4, movetoworkspace, 4
 
-
 # --- LOOK AND FEEL ---
 general {
     gaps_in = 5
     gaps_out = 12
     border_size = 2
-    col.active_border = rgba(000000ee)
-    col.inactive_border = rgba(000000aa)
+    col.active_border = rgba(00e5c3ee) rgba(3dffa0ee) 45deg
+    col.inactive_border = rgba(1a3d2aaa)
     layout = dwindle
 }
 
@@ -126,45 +103,3 @@ animations {
     animation = fade, 1, 7, default
     animation = workspaces, 1, 6, default
 }
-
-# --- AI WORKSPACE SUBMAP ---
-# Activated automatically when entering workspace 5 via SUPER+A.
-# ESC kills the AI. SUPER+D and SUPER+R are disabled. All hw keys still work.
-submap = ai
-
-# ESC — kill AI window and return
-bind = , Escape, exec, ~/dotfiles/scripts/kill-ai.sh
-
-# SUPER+A — go back without killing (AI stays alive on ws5)
-bind = $mainMod, A, exec, ~/GeneralAI/scripts/toggle-assistant.sh
-
-# SUPER+D and SUPER+R are no-ops in the AI workspace
-bind = $mainMod, D, exec, true
-bind = $mainMod, R, exec, true
-
-# Workspace switching resets submap and switches
-bind = $mainMod, 1, exec, bash -c 'hyprctl dispatch submap reset && hyprctl dispatch workspace 1'
-bind = $mainMod, 2, exec, bash -c 'hyprctl dispatch submap reset && hyprctl dispatch workspace 2'
-bind = $mainMod, 3, exec, bash -c 'hyprctl dispatch submap reset && hyprctl dispatch workspace 3'
-bind = $mainMod, 4, exec, bash -c 'hyprctl dispatch submap reset && hyprctl dispatch workspace 4'
-
-# Essential binds still available on ws5
-bind = $mainMod, L, exec, hyprlock
-bind = $mainMod, C, killactive
-bind = $mainMod, F, fullscreen, 0
-bind = $mainMod, Q, exec, kitty
-
-# Hardware keys must be duplicated in the submap
-binde = , XF86AudioRaiseVolume,  exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+ && date +%s > /tmp/waybar_volume_hud && pkill -SIGRTMIN+8 waybar
-binde = , XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && date +%s > /tmp/waybar_volume_hud && pkill -SIGRTMIN+8 waybar
-binde = , XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && date +%s > /tmp/waybar_volume_hud && pkill -SIGRTMIN+8 waybar
-binde = , XF86MonBrightnessUp,   exec, brightnessctl set +5% && date +%s > /tmp/waybar_brightness_hud && pkill -SIGRTMIN+8 waybar
-binde = , XF86MonBrightnessDown, exec, brightnessctl set 5%- && date +%s > /tmp/waybar_brightness_hud && pkill -SIGRTMIN+8 waybar
-binde = , XF86KbdBrightnessUp,   exec, brightnessctl --device='*kbd_backlight*' set +33%
-binde = , XF86KbdBrightnessDown, exec, brightnessctl --device='*kbd_backlight*' set 33%-
-bind  = , XF86TouchpadToggle,    exec, ~/dotfiles/scripts/toggle_touchpad.sh && pkill -SIGRTMIN+9 waybar
-bind  = , Print,                 exec, mkdir -p ~/Pictures/Screenshots && grim -g "$(slurp)" ~/Pictures/Screenshots/Screenshot_$(date +'%Y%m%d_%H%M%S').png
-bind  = , Caps_Lock,             exec, pkill -SIGRTMIN+9 waybar
-bind  = , Num_Lock,              exec, pkill -SIGRTMIN+9 waybar
-
-submap = reset

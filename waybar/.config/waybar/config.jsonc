@@ -10,12 +10,15 @@
     ],
     "hyprland/workspaces": {
         "persistent-workspaces": {
-            "*": [
-                1,
-                2,
-                3,
-                4
-            ]
+            "*": [ 1, 2, 3, 4 ]
+        },
+        "format": "{icon}",
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "AI"
         }
     },
     "custom/status": {
@@ -46,6 +49,7 @@
         "network",
         "cpu",
         "memory",
+        "custom/gpu",
         "disk",
         "battery",
         "custom/power"
@@ -71,7 +75,7 @@
             "warning": 70,
             "critical": 85
         },
-        "format": " {usage}%",
+        "format": "󰻠 {usage}%",
         "tooltip": true
     },
     "memory": {
@@ -79,7 +83,7 @@
             "warning": 70,
             "critical": 85
         },
-        "format": " {}%",
+        "format": "󱚉 {}%",
         "tooltip-format": "RAM: {used:0.1f} GiB / {total:0.1f} GiB"
     },
     "disk": {
@@ -87,9 +91,15 @@
             "warning": 70,
             "critical": 85
         },
-        "format": " {percentage_used}%",
+        "format": "󱛟 {percentage_used}%",
         "tooltip-format": "SSD: {used} / {total}  ({free} free)",
         "path": "/"
+    },
+    "custom/gpu": {
+        "exec": "python3 /home/high-hillz/dotfiles/scripts/waybar_gpu.py",
+        "return-type": "json",
+        "interval": 3,
+        "tooltip": true
     },
     "battery": {
         "states": {

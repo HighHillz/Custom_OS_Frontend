@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import glob, json, subprocess, os
 
-ACTIVE_COLOR = "#00e5c3"
-DIMMED_COLOR = "#00e5c34d"
+ACTIVE_COLOR = "#ffffff"
+DIMMED_COLOR = "#ffffff4d"
 
 _kbd_caps = False
 _kbd_num  = False

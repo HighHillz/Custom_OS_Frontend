@@ -6,6 +6,11 @@
 HIDDEN_WS="special:hidden"
 STATE_FILE="/tmp/hypr_desktop_toggle_state"
 
+# Do not run if we are currently on the AI workspace (5)
+if [[ "$(hyprctl activeworkspace -j | jq '.id')" -eq 5 ]]; then
+    exit 0
+fi
+
 if [[ -f "$STATE_FILE" ]]; then
     # RESTORE: jq -c '.[]' emits one compact JSON object per line so we can parse each
     while IFS= read -r entry; do
@@ -24,8 +29,8 @@ else
     ACTIVE_WS=$(hyprctl activeworkspace -j | jq '.id')
     CLIENTS=$(hyprctl clients -j)
 
-    # Only target real workspaces (id > 0); special workspaces already have negative IDs
-    VISIBLE=$(echo "$CLIENTS" | jq '[.[] | select(.workspace.id > 0)]')
+    # Only target real workspaces (id > 0) and ignore the AI workspace (5)
+    VISIBLE=$(echo "$CLIENTS" | jq '[.[] | select(.workspace.id > 0 and .workspace.id != 5)]')
 
     COUNT=$(echo "$VISIBLE" | jq 'length')
     if [[ "$COUNT" -eq 0 ]]; then
